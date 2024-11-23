@@ -1,2 +1,0 @@
-﻿//about to error on invalid escape (\n)
-"this string hangs on \n "

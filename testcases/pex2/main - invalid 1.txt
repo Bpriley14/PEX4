@@ -1,4 +1,0 @@
-﻿function main(){
-}
-//should error out because nothing should be below main
-foo();
