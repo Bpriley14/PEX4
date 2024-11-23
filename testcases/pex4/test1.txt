@@ -1,0 +1,71 @@
+ // ------------------------------------------------------------
+ // Variable Declaration Test
+ // ------------------------------------------------------------
+	function Test1() {
+		printLine("Variable Declaration Test");
+	
+		//Declares a bunch of variables
+        int i;
+		i := 1;
+		float f1;
+		f1 :=-2.3;
+		float f2;
+		f2 :=3.4e5;
+		str s;
+		s :="hello world";
+
+		// Print out the variables
+		printInt(i);
+		printLine();
+		printFloat(f1);
+		printLine();
+		printFloat(f2);
+		printLine();
+		printString(s);
+		printLine();
+	}
+	
+// ------------------------------------------------------------
+// Variable Assignment Test
+// ------------------------------------------------------------
+	function Test2() {
+	  printLine("Variable Assignment Test");
+
+	  int x;
+	  x := 0;
+	  float y;
+	  y := 1.2;
+	  str s;
+	  s := "original string";
+	  
+	  printLine("  x (before): ");
+	  printInt(x);
+	  printLine("  y (before): ");
+	  printFloat(y);
+	  printLine("  s (before): ");
+	  printString(s);
+
+	  x := 12345;
+	  y := -6.789;
+	  s := "dog goes \"woof\", cat goes \"meow\", but what does the fox say \\sarcasm";
+
+	  printLine("  x (after): ");
+	  printInt(x);
+	  printLine("  y (after): ");
+	  printFloat(y);
+	  printLine("  s (after): ");
+	  printString(s);
+	}
+	
+	
+	function main() {
+		//Test1();
+		Test2();
+		//Test3();
+		//Test4();
+		//Test5();
+		//Test6();
+		// Test 7 Is Called in Test6()
+		//Test8();
+		// Test 9 is Called in Test8()
+	}
