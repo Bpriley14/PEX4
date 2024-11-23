@@ -1,4 +1,4 @@
-﻿using CS426.node;
+using CS426.node;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -56,11 +56,22 @@ namespace CS426.analysis
             WriteLine("}");
         }
 
-        //int x
+        public override void InASomeFunctDeclarations(ASomeFunctDeclarations node)
+        {
+            WriteLine(".method static void " + node.GetId().Text + "() cil managed");
+            WriteLine("{\n\t.maxstack 128\n");
+        }
+
+        public override void OutASomeFunctDeclarations(ASomeFunctDeclarations node)
+        {
+            WriteLine("\n\tret");
+            WriteLine("}");
+        }
+
         public override void OutAVarDec(AVarDec node)
         {
             WriteLine("\t// Decalring Variable " + node.GetId().ToString());
-            Write("\t.locals init(");
+            Write("\t.locals init (");
 
             if(node.GetRwType().Text == "int")
             {
@@ -69,6 +80,10 @@ namespace CS426.analysis
             else if (node.GetRwType().Text == "float")
             {
                 Write("float32 ");
+            }
+            else if (node.GetRwType().Text == "str")
+            {
+                Write("string ");
             }
             else
             {
@@ -143,5 +158,6 @@ namespace CS426.analysis
                 WriteLine("\tcall void " + node.GetId().Text + "()");
             }
         }
+
     }
 }
