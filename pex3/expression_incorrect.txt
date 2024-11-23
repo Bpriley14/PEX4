@@ -1,9 +1,0 @@
-int sum = 5 + ;
-float area = radius * ;
-int difference = 20 - "5";
-int product = 6 * true;
-float quotient = 10 / 0;
-int invalid_expr = (a + b * (c - d;
-int negative_value = --5;
-float result = 3 + * 4;
-int mod_result = 10 % 0;

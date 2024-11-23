@@ -1,8 +1,0 @@
-int age = "twenty";
-float height = ;
-string name 123;
-bool is_student;
-const int MAX_COUNT;
-float weight = true;
-string address = 456;
-int = 10;

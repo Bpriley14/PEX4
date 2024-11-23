@@ -1,9 +1,0 @@
-function main () {
-    int x;
-    str y;
-
-    x := 5;
-    y := "hi";
-
-    if ( x > y ) { }
-}

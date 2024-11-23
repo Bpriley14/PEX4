@@ -1,6 +1,0 @@
-int result = (5 + 3) * 2;
-float area = 3.14 * (radius * radius);
-bool is_valid = (age >= 18) and ((is_member) or (has_permission));
-int complex_calc = ((a + b) * (c - d)) / e;
-bool is_in_range = (value > min) and (value < max);
-int nested_expression = ((x + (y * z)) - (w / v)) + u;
