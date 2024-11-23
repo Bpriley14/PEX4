@@ -1,0 +1,42 @@
+main() {
+    int user_count = 10;
+    print("Hello, world!");
+}
+
+
+function main(int user_count) {
+    print("User count is " + user_count);
+}
+
+
+function main() 
+    int user_count = 10;
+    print("Welcome");
+
+
+function main() {
+    user_count = 10; // user_count not declared
+    print(user_count);
+}
+
+
+function main() {
+    print("This is the first main");
+}
+
+function main() {
+    print("This is the second main");
+}
+
+
+function main() {
+    greet_user(); // greet_user not declared
+}
+
+
+function main() {
+    int counter = 5;
+    while (counter > 0) {
+        print(counter);
+        counter = counter - 1;
+}

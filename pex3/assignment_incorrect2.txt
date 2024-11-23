@@ -1,0 +1,6 @@
+const int ab := 10;
+
+function main(){
+
+    ab := 20;
+}

@@ -1,0 +1,13 @@
+int count;
+float price = "19.99";
+const string GREETING;
+count = + 1;
+if count > 5 {
+    print("Count is greater than 5");
+} else 
+    print("Count is 5 or less");
+while count > 0 {
+    print(count);
+    count = count -;
+}
+greet(10);

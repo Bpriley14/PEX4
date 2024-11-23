@@ -1,0 +1,26 @@
+function main () {
+    int x;
+    int y;
+    float a;
+    float b;
+
+    x := 5;
+    y := 10;
+
+    a := 5.5;
+    b := 6.6;
+
+    if ( x < y ) { }
+    if ( x <= y ) { }
+    if ( x > y ) { }
+    if ( x >= y ) { }
+    if ( x = y ) { }
+    if ( x != y ) { }
+
+    if ( a < b ) { }
+    if ( a <= b ) { }
+    if ( a > b ) { }
+    if ( a >= b ) { }
+    if ( a = b ) { }
+    if ( a != b ) { }
+}

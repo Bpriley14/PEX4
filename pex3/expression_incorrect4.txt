@@ -1,0 +1,9 @@
+function main(){
+    int x;
+	int y;
+	int z;
+	float a;
+	float b;
+
+	x := "hi" / 5;
+}

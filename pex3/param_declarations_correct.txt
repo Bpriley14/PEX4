@@ -1,0 +1,20 @@
+function int add(int a, int b) {
+    return a + b;
+}
+
+function void display_message(string message) {
+    print(message);
+}
+
+function float calculate_area(float radius) {
+    const float PI = 3.14159;
+    return PI * radius * radius;
+}
+
+function bool is_greater(int x, int y) {
+    return x > y;
+}
+
+function void process_data(int data, string label, float scale) {
+    print(label);
+}

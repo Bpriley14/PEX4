@@ -1,0 +1,21 @@
+function add(int a, int b) {
+    a := a + b;
+}
+
+function numMultiplier(int x) {
+    x := x * 50;
+}
+
+
+function main () {
+    int x;
+    int a;
+    int b;
+    int subtract;
+
+    x := 5;
+    a := 10;
+    b := 5;
+
+    subtract(a, b);
+}

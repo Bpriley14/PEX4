@@ -1,0 +1,14 @@
+﻿function appp (int p){
+
+}
+
+function foo1 (){
+
+}
+
+function main(){
+	int app;
+
+	appp(25);
+
+}

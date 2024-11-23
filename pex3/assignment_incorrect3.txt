@@ -1,0 +1,7 @@
+const int ab := 10;
+
+function main(){
+
+    int x;
+    x := "hi";
+}

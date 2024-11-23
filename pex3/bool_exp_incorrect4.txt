@@ -1,0 +1,14 @@
+function main(){
+	int y;
+	int z;
+	float a;
+	float b;
+
+	a := 7.7;
+	b := 1.2;
+	
+	y := 5;
+	z := 10;
+
+	if ( ( a < b ) != ( y < z ) ) { }
+}

@@ -1,0 +1,23 @@
+function add(int a, int b) {
+    a := a + b;
+}
+
+function numMultiplier(int x) {
+    x := x * 50;
+}
+
+function manyVars(str q, int x, int a, int b) {
+    x := x * 50;
+}
+
+function main () {
+    int x;
+    int a;
+    int b;
+    str q;
+
+    q := "hello";
+    x := 5.5;
+    a := 10;
+    b := 5;
+}

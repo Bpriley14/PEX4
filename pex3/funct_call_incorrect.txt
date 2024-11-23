@@ -1,0 +1,30 @@
+function int add(int a, int b) {
+    return a + b;
+}
+int result = add(5); 
+
+function void display_message(string message) {
+    print(message);
+}
+display_message(Hello, World!); 
+
+function float calculate_area(float radius) {
+    return radius * radius;
+}
+float area = calculate_area("7.5"); 
+
+function bool is_greater(int x, int y) {
+    return x > y;
+}
+bool status = is_greater(10); 
+
+function void process_data(int data, string label, float scale) {
+    print(label);
+}
+process_data("42", "Data Label", 3.5); 
+
+function void greet() {
+    print("Hello!");
+}
+greet(5); 
+

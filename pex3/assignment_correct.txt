@@ -1,0 +1,16 @@
+const int ab := 10;
+
+function main(){
+
+    int x;
+    x := 20;
+    x := x + 1;
+
+    float y;
+    y := 3.5;
+    y := y - 0.1;
+
+    str a; 
+    a := "Hello";
+
+}

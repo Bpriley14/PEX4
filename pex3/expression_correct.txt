@@ -1,0 +1,22 @@
+function main(){
+    int x;
+	int y;
+	int z;
+	float a;
+	float b;
+
+	a := 7.7 + 1.3;
+	b := 7.7 - 1.3;
+    a := 7.7 * 1.3;
+    b := 7.7 / 1.3;
+	
+	y := 10;
+	z := 5;
+
+    x := -5;
+    x := y + z;
+    x := y - z;
+    x := y * z;
+    x := y / z;
+    x := (y + z) - (y + z);
+}

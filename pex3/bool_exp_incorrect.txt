@@ -1,0 +1,21 @@
+
+bool is_valid = (age > 18) (has_permission == true); 
+
+
+bool is_valid = (user_age == "18"); 
+
+
+bool is_allowed = (role == "admin") and (has_access); 
+
+
+bool is_between = (5 < age < 18); 
+
+
+bool is_negative = not(user_age); 
+
+
+if (age and is_valid) { 
+    print("Valid age");
+}
+
+bool access_granted = ((user_age >= 21) and (has_membership == true or (is_vip and not is_expired);

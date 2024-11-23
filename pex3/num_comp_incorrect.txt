@@ -1,0 +1,16 @@
+int age = "25"; 
+bool is_adult = age >= "18"; 
+
+float temperature = 36.5;
+bool is_normal = temperature < "37.0"; 
+
+int score;
+bool is_passing = score > 70; 
+
+int length = 10;
+bool is_equal = length ==; 
+
+const int MIN_AGE;
+bool is_minor = age <= MIN_AGE; 
+
+bool comparison_result = 5 < 10 < 15;
