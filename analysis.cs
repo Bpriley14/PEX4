@@ -20,6 +20,7 @@ public interface Analysis : Switch
     void CaseANoneConstDeclarations(ANoneConstDeclarations node);
     void CaseASomeFunctDeclarations(ASomeFunctDeclarations node);
     void CaseANoneFunctDeclarations(ANoneFunctDeclarations node);
+    void CaseAFunctDeclaration(AFunctDeclaration node);
     void CaseAMainDeclaration(AMainDeclaration node);
     void CaseAMultBoolExp(AMultBoolExp node);
     void CaseASingleBoolExp(ASingleBoolExp node);
@@ -191,6 +192,10 @@ public class AnalysisAdapter : Analysis
         DefaultCase(node);
     }
     public virtual void CaseANoneFunctDeclarations(ANoneFunctDeclarations node)
+    {
+        DefaultCase(node);
+    }
+    public virtual void CaseAFunctDeclaration(AFunctDeclaration node)
     {
         DefaultCase(node);
     }
@@ -685,6 +690,40 @@ public class DepthFirstAdapter : AnalysisAdapter
         {
             node.GetFunctDeclarations().Apply(this);
         }
+        if(node.GetFunctDeclaration() != null)
+        {
+            node.GetFunctDeclaration().Apply(this);
+        }
+        OutASomeFunctDeclarations(node);
+    }
+    public virtual void InANoneFunctDeclarations(ANoneFunctDeclarations node)
+    {
+        DefaultIn(node);
+    }
+
+    public virtual void OutANoneFunctDeclarations(ANoneFunctDeclarations node)
+    {
+        DefaultOut(node);
+    }
+
+    public override void CaseANoneFunctDeclarations(ANoneFunctDeclarations node)
+    {
+        InANoneFunctDeclarations(node);
+        OutANoneFunctDeclarations(node);
+    }
+    public virtual void InAFunctDeclaration(AFunctDeclaration node)
+    {
+        DefaultIn(node);
+    }
+
+    public virtual void OutAFunctDeclaration(AFunctDeclaration node)
+    {
+        DefaultOut(node);
+    }
+
+    public override void CaseAFunctDeclaration(AFunctDeclaration node)
+    {
+        InAFunctDeclaration(node);
         if(node.GetRwFunction() != null)
         {
             node.GetRwFunction().Apply(this);
@@ -717,22 +756,7 @@ public class DepthFirstAdapter : AnalysisAdapter
         {
             node.GetRBrace().Apply(this);
         }
-        OutASomeFunctDeclarations(node);
-    }
-    public virtual void InANoneFunctDeclarations(ANoneFunctDeclarations node)
-    {
-        DefaultIn(node);
-    }
-
-    public virtual void OutANoneFunctDeclarations(ANoneFunctDeclarations node)
-    {
-        DefaultOut(node);
-    }
-
-    public override void CaseANoneFunctDeclarations(ANoneFunctDeclarations node)
-    {
-        InANoneFunctDeclarations(node);
-        OutANoneFunctDeclarations(node);
+        OutAFunctDeclaration(node);
     }
     public virtual void InAMainDeclaration(AMainDeclaration node)
     {
@@ -2157,6 +2181,44 @@ public class ReversedDepthFirstAdapter : AnalysisAdapter
     public override void CaseASomeFunctDeclarations(ASomeFunctDeclarations node)
     {
         InASomeFunctDeclarations(node);
+        if(node.GetFunctDeclaration() != null)
+        {
+            node.GetFunctDeclaration().Apply(this);
+        }
+        if(node.GetFunctDeclarations() != null)
+        {
+            node.GetFunctDeclarations().Apply(this);
+        }
+        OutASomeFunctDeclarations(node);
+    }
+    public virtual void InANoneFunctDeclarations(ANoneFunctDeclarations node)
+    {
+        DefaultIn(node);
+    }
+
+    public virtual void OutANoneFunctDeclarations(ANoneFunctDeclarations node)
+    {
+        DefaultOut(node);
+    }
+
+    public override void CaseANoneFunctDeclarations(ANoneFunctDeclarations node)
+    {
+        InANoneFunctDeclarations(node);
+        OutANoneFunctDeclarations(node);
+    }
+    public virtual void InAFunctDeclaration(AFunctDeclaration node)
+    {
+        DefaultIn(node);
+    }
+
+    public virtual void OutAFunctDeclaration(AFunctDeclaration node)
+    {
+        DefaultOut(node);
+    }
+
+    public override void CaseAFunctDeclaration(AFunctDeclaration node)
+    {
+        InAFunctDeclaration(node);
         if(node.GetRBrace() != null)
         {
             node.GetRBrace().Apply(this);
@@ -2189,26 +2251,7 @@ public class ReversedDepthFirstAdapter : AnalysisAdapter
         {
             node.GetRwFunction().Apply(this);
         }
-        if(node.GetFunctDeclarations() != null)
-        {
-            node.GetFunctDeclarations().Apply(this);
-        }
-        OutASomeFunctDeclarations(node);
-    }
-    public virtual void InANoneFunctDeclarations(ANoneFunctDeclarations node)
-    {
-        DefaultIn(node);
-    }
-
-    public virtual void OutANoneFunctDeclarations(ANoneFunctDeclarations node)
-    {
-        DefaultOut(node);
-    }
-
-    public override void CaseANoneFunctDeclarations(ANoneFunctDeclarations node)
-    {
-        InANoneFunctDeclarations(node);
-        OutANoneFunctDeclarations(node);
+        OutAFunctDeclaration(node);
     }
     public virtual void InAMainDeclaration(AMainDeclaration node)
     {

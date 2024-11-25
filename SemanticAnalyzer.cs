@@ -1,24 +1,3 @@
-//.......Tasks.......................
-//Literals:                              Completed, Tested
-//Operand:                               Completed, Tested
-//Parenthetical_exp:                     Completed, Tested
-//Negation:                              Completed, Tested
-//Term:                                  Completed, Tested
-//Expression:                            Completed, Tested
-//Constants:                             Completed, Tested
-//Declarations:                          Almost Completed, Tested
-//param_declarations:                    Almost Completed
-//assignment:                            Completed, Tested
-//Booleans:                              Completed, Tested
-//num compare:                           Completed, Tested 
-//call_params:                           Completed, Not tested
-//funct_call:                            Completed, Not tested
-//statement:                             Not Started
-//statements:                            Not Started
-//loop Statement:                        Completed, Tested
-//if Statement:                          Completed, Tested
-//.................................
-
 using CS426.node;
 using System;
 using System.Collections.Generic;
@@ -26,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace CS426.analysis
 {
@@ -405,84 +385,135 @@ namespace CS426.analysis
                 localSymbolTable.Add(node.GetId().Text, newVariableDefinition);
             }
         }
+        //public override void OutASomeFunctDeclarations(ASomeFunctDeclarations node)
+        //{
+        //    Definition idDef;
+        //    Definition typeDef;
+        //    if (globalSymbolTable.TryGetValue(node.GetId().Text, out idDef))
+        //    {
+        //        PrintWarning(node.GetId(), "Identifier " + node.GetId().Text + " is already being used");
+        //        return;
+        //    }
 
-        public override void OutASomeFunctDeclarations(ASomeFunctDeclarations node)
-{
-    Definition idDef;
-    Definition typeDef;
-    if (globalSymbolTable.TryGetValue(node.GetId().Text, out idDef))
-    {
-        PrintWarning(node.GetId(), "Identifier " + node.GetId().Text + " is already being used");
-        return;
-    }
 
-    
-    localSymbolTable = new Dictionary<string, Definition>();
+        //    localSymbolTable = new Dictionary<string, Definition>();
 
-    
-    FunctionDefinition newFunctionDefinition = new FunctionDefinition
-    {
-        name = node.GetId().Text,
-        parameters = new List<VariableDefinition>()
-    };
 
-    
-    var parameterList = new List<dynamic>();
+        //    FunctionDefinition newFunctionDefinition = new FunctionDefinition
+        //    {
+        //        name = node.GetId().Text,
+        //        parameters = new List<VariableDefinition>()
+        //    };
 
-    
-    var paramDeclarations = node.GetParamDeclarations();
-    if (paramDeclarations != null)
-    {
-        
-        if (paramDeclarations is IEnumerable<dynamic>)
+
+        //    var parameterList = new List<dynamic>();
+
+
+        //    var paramDeclarations = node.GetParamDeclarations();
+
+
+        //    if (paramDeclarations != null)
+        //    {
+
+
+        //            parameterList.Add(paramDeclarations);
+
+
+
+        //        foreach (var paramNode in parameterList)
+        //        {
+        //            Console.WriteLine(parameterList.GetEnumerator().MoveNext());
+
+        //            var paramType = paramNode.GetType().Text;
+        //            var paramName = paramNode.GetId().Text;
+
+        //            if (!globalSymbolTable.TryGetValue(paramType, out typeDef))
+        //            {
+        //                PrintWarning(paramNode.GetId(), "Type " + paramType + " does not exist!");
+        //            }
+
+
+        //            VariableDefinition parameterDefinition = new VariableDefinition
+        //            {
+        //                name = paramName,
+        //                variableType = paramType
+        //            };
+
+        //            newFunctionDefinition.parameters.Add(parameterDefinition);
+        //            localSymbolTable[paramName] = parameterDefinition;
+        //        }
+        //    }
+
+
+        //    globalSymbolTable.Add(node.GetId().Text, newFunctionDefinition);
+        //}
+        public override void OutAFunctDeclaration(AFunctDeclaration node)
         {
-            parameterList.AddRange((IEnumerable<dynamic>)paramDeclarations);
-        }
-        
-        else
-        {
-            parameterList.Add(paramDeclarations);
-        }
+            Definition idDef;
 
-        
-        foreach (var paramNode in parameterList)
-        {
-                var paramType = paramNode.GetType().Text;
-                var paramName = paramNode.GetId().Text;
+            if (globalSymbolTable.TryGetValue(node.GetId().Text, out idDef))
+            {
+                PrintWarning(node.GetId(), "Identifier " + node.GetId().Text + " is already being used");
+            }
+            else
+            {
+                //Wipes out the local symbol table
+                localSymbolTable = new Dictionary<string, Definition>();
 
-                if (!globalSymbolTable.TryGetValue(paramType, out typeDef))
-                {
-                    PrintWarning(paramNode.GetId(), "Type " + paramType + " does not exist!");
-                }
+                //Registers the New Function Definition in the Global Table
+                FunctionDefinition newFunctionDefinition = new FunctionDefinition();
+                newFunctionDefinition.name = node.GetId().Text;
 
+                // TODO:  You will have to figure out how to populate this with parameters
+                // when you work on PEX 3
+                newFunctionDefinition.parameters = new List<VariableDefinition>();
                 
-                VariableDefinition parameterDefinition = new VariableDefinition
-                {
-                    name = paramName,
-                    variableType = paramType
-                };
-
-                newFunctionDefinition.parameters.Add(parameterDefinition);
-                localSymbolTable[paramName] = parameterDefinition;
-        }
-    }
-
-    
-    globalSymbolTable.Add(node.GetId().Text, newFunctionDefinition);
-}
-
+                    // Adds the Function!
+                    globalSymbolTable.Add(node.GetId().Text, newFunctionDefinition);
+            }
+        } //needs implimentation
         public override void OutANoneFunctDeclarations(ANoneFunctDeclarations node)
         {
             base.OutANoneFunctDeclarations(node);
         }
+        //public override void OutASomeFunctDeclarations(ASomeFunctDeclarations node)
+        //{
+        //    Definition idDef;
+
+        //    if (globalSymbolTable.TryGetValue(node.GetId().Text, out idDef))
+        //    {
+        //        PrintWarning(node.GetId(), "Identifier " + node.GetId().Text + " is already being used");
+        //    }
+        //    else
+        //    {
+        //        //Wipes out the local symbol table
+        //        localSymbolTable = new Dictionary<string, Definition>();
+
+        //        //Registers the New Function Definition in the Global Table
+        //        FunctionDefinition newFunctionDefinition = new FunctionDefinition();
+        //        newFunctionDefinition.name = node.GetId().Text;
+
+        //        // TODO:  You will have to figure out how to populate this with parameters
+        //        // when you work on PEX 3
+        //        newFunctionDefinition.parameters = new List<VariableDefinition>();
+
+        //        // Adds the Function!
+        //        globalSymbolTable.Add(node.GetId().Text, newFunctionDefinition);
+        //    }
+        //} //needs implimentation
+
+        //public override void OutANoneFunctDeclarations(ANoneFunctDeclarations node)
+        //{
+        //    base.OutANoneFunctDeclarations(node);
+        //}
 
         public override void OutASomeConstDeclarations(ASomeConstDeclarations node)
         {
             Definition typeDef;
             Definition idDef;
             Definition valueDef;
-        
-        
+
+
             if (!globalSymbolTable.TryGetValue(node.GetRwType().Text, out typeDef))
             {
                 PrintWarning(node.GetId(), "Type " + node.GetType().ToString() + " does not exist!");
@@ -513,53 +544,6 @@ namespace CS426.analysis
                 globalSymbolTable.Add(node.GetId().Text, newConstantDefinition);
             }
         }
-        
-        // public override void OutASomeConstDeclarations(ASomeConstDeclarations node)
-        // {
-        //     Definition typeDef;
-        //     Definition idDef;
-        //     Definition valueDef;
-
-
-        //     if (!globalSymbolTable.TryGetValue(node.GetId().Text, out typeDef))
-        //     {
-        //         PrintWarning(node.GetId(), "Type " + node.GetType().ToString() + " does not exist!");
-        //     }
-        //     else if (!(typeDef is TypeDefinition))
-        //     {
-        //         PrintWarning(node.GetId(), "Identifier " + node.GetType().ToString() + " is not a recognized data type");
-        //     }
-        //     else if (localSymbolTable.TryGetValue(node.GetId().Text, out idDef))
-        //     {
-        //         PrintWarning(node.GetId(), "Identifier " + node.GetId().Text + " is already being used");
-        //     }
-        //     else
-        //     {
-
-        //         if (!localSymbolTable.TryGetValue(node.GetId().Text, out valueDef))
-        //         {
-        //             PrintWarning(node.GetId(), "Value " + node.GetId().Text + " is not declared");
-        //         }
-        //         else if (valueDef is VariableDefinition valueVariable)
-        //         {
-
-        //             if (valueVariable.variableType != typeDef)
-        //             {
-        //                 PrintWarning(node.GetId(), "Type mismatch: cannot assign "
-        //                     + valueVariable.variableType.name + " to " + typeDef.name);
-        //             }
-        //             else
-        //             {
-        //                 var newConstantDefinition = new ConstantDefinition(node.GetId().Text, (TypeDefinition)typeDef, node.GetType().ToString());
-        //                 localSymbolTable.Add(node.GetId().Text, newConstantDefinition);
-        //             }
-        //         }
-        //         else
-        //         {
-        //             PrintWarning(node.GetId(), "Assigned value is not a recognized variable or constant");
-        //         }
-        //     }
-        // }
         public override void OutANoneConstDeclarations(ANoneConstDeclarations node)
         {
             base.OutANoneConstDeclarations(node);
@@ -599,7 +583,7 @@ namespace CS426.analysis
         {
             Definition idDef;
 
-            if (globalSymbolTable.TryGetValue(node.GetParamDeclarations().ToString(), out idDef))
+            if (globalSymbolTable.TryGetValue(node.GetParamDeclaration().ToString(), out idDef))
             {
                 Console.WriteLine("Invalid Parameter: " + idDef);
             }
@@ -624,24 +608,37 @@ namespace CS426.analysis
         public override void OutAOneParamDeclarations(AOneParamDeclarations node)
         {
 
-            Definition idDef;
+            Definition expressionDef;
 
-            if (globalSymbolTable.TryGetValue(node.GetParamDeclaration().ToString(), out idDef))
+            if (!decoratedParseTree.TryGetValue(node.GetParamDeclaration(), out expressionDef))
             {
-                Console.WriteLine("Invalid Parameter: " + idDef);
+                // We are checking to see if the node below us was decorated.
+                // We don't have to print an error, because if something bad happened
+                // the error would have been printed at the lower node.
             }
-            else
+            else if (!(expressionDef is NumberDefinition) || !(expressionDef is StringDefinition))
             {
-                //Wipes out the local symbol table
-                localSymbolTable = new Dictionary<string, Definition>();
-
-                //Registers the New Function Definition in the Global Table
-                FunctionDefinition newFunctionDefinition = new FunctionDefinition();
-                newFunctionDefinition.name = node.GetParamDeclaration().ToString();
-
-                // Adds the Function!
-                globalSymbolTable.Add(node.GetParamDeclaration().ToString(), newFunctionDefinition);
+                Console.WriteLine("Invalid Parameter: " + expressionDef);
             }
+        //}
+        //Definition idDef;
+
+        //    if (globalSymbolTable.TryGetValue(node.GetParamDeclaration().ToString(), out idDef))
+        //    {
+        //        Console.WriteLine("Invalid Parameter: " + idDef);
+        //    }
+        //    else
+        //    {
+        //        //Wipes out the local symbol table
+        //        localSymbolTable = new Dictionary<string, Definition>();
+
+        //        //Registers the New Function Definition in the Global Table
+        //        FunctionDefinition newFunctionDefinition = new FunctionDefinition();
+        //        newFunctionDefinition.name = node.GetParamDeclaration().ToString();
+
+        //        // Adds the Function!
+        //        globalSymbolTable.Add(node.GetParamDeclaration().ToString(), newFunctionDefinition);
+        //    }
         }
         public override void OutANoneParamDeclarations(ANoneParamDeclarations node)
         {
@@ -659,10 +656,11 @@ namespace CS426.analysis
             Definition idDef;
             Definition expressionDef;
 
-             if (globalSymbolTable.TryGetValue(node.GetId().Text, out idDef))
-             {
-                 PrintWarning(node.GetId(), "Identifier " + node.GetId().Text + " is already being used as a constant, value is final");
-             }
+
+            if (globalSymbolTable.TryGetValue(node.GetId().Text, out idDef))
+            {
+                PrintWarning(node.GetId(), "Identifier " + node.GetId().Text + " is already being used as a constant, value is final");
+            }
             else if (!localSymbolTable.TryGetValue(node.GetId().Text, out idDef))
             {
                 PrintWarning(node.GetId(), "ID " + node.GetId().Text + " does not exist");
@@ -1249,13 +1247,13 @@ namespace CS426.analysis
         // --------------------------------------------------------------
         // Statements
         // --------------------------------------------------------------
-        public override void OutASomeStatements(ASomeStatements node)
-        {
-            foreach (var statement in node.GetStatements())
-            {
-                statement.Apply(this); // Process each statement node
-            }
-        } //Needs implimentation
+        //public override void OutASomeStatements(ASomeStatements node)
+        //{
+        //    foreach (var statement in node.GetStatements())
+        //    {
+        //        statement.Apply(this); // Process each statement node
+        //    }
+        //} //Needs implimentation
         public override void CaseANoneStatements(ANoneStatements node)
         {
             // No statements to process, so nothing is needed here.
@@ -1264,11 +1262,10 @@ namespace CS426.analysis
         // --------------------------------------------------------------
         // Loop Statement
         // --------------------------------------------------------------
-
         public override void OutALoopStmt(ALoopStmt node)
         {
             Definition boolExpDefiniton;
-        
+
             if (!decoratedParseTree.TryGetValue(node.GetBoolExp(), out boolExpDefiniton))
             {
                 //error printed already
@@ -1278,38 +1275,36 @@ namespace CS426.analysis
                 decoratedParseTree.Add(node, boolExpDefiniton);
             }
         }
-        // public override void OutALoopStmt(ALoopStmt node)
-        // {
-        //     var exprNode = node.GetBoolExp();
-        //     Definition exprType;
-
-
-        //     if (localSymbolTable.TryGetValue(exprNode.ToString(), out exprType))
-        //     {
-
-        //         if (!(exprType is TypeDefinition typeDef && typeDef.name == "Boolean"))
-        //         {
-        //             //Needs tokens but i can't find any
-        //             PrintWarning(node.GetRwWhile(), "Condition in while loop must be a Boolean expression");
-        //         }
-        //     }
-        //     else
-        //     {
-        //         //needs tokens but I can't find any
-        //         PrintWarning(node.GetRwWhile(), "Expression in while loop is not defined");
-        //     }
-
-
-        //     base.OutALoopStmt(node);
-        // }
 
         // --------------------------------------------------------------
         // If Statement
         // --------------------------------------------------------------
+        //public override void OutAIfStmt(AIfStmt node)
+        //{
+
+        //    var conditionNode = node.GetBoolExp();
+        //    Definition conditionType;
+
+        //    // Check if the condition expression type is in the symbol table
+        //    if (localSymbolTable.TryGetValue(conditionNode.ToString(), out conditionType))
+        //    {
+        //        // Verify if the type is Boolean
+        //        if (!(conditionType is TypeDefinition typeDef && typeDef.name == "Boolean"))
+        //        {
+        //            //needs tokens but I can't find any
+        //            PrintWarning(node.GetRwIf(), "Condition in if statement must be a Boolean expression");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        //needs tokens but I can't find any
+        //        PrintWarning(node.GetRwIf(), "Expression in if statement is not defined");
+        //    }
+        //}
         public override void OutAIfStmt(AIfStmt node)
         {
             Definition boolExpDefiniton;
-        
+
             if (!decoratedParseTree.TryGetValue(node.GetBoolExp(), out boolExpDefiniton))
             {
                 //error printed already
@@ -1319,28 +1314,6 @@ namespace CS426.analysis
                 decoratedParseTree.Add(node, boolExpDefiniton);
             }
         }
-        // public override void OutAIfStmt(AIfStmt node)
-        // {
-
-        //     var conditionNode = node.GetBoolExp();
-        //     Definition conditionType;
-
-        //     // Check if the condition expression type is in the symbol table
-        //     if (localSymbolTable.TryGetValue(conditionNode.ToString(), out conditionType))
-        //     {
-        //         // Verify if the type is Boolean
-        //         if (!(conditionType is TypeDefinition typeDef && typeDef.name == "Boolean"))
-        //         {
-        //             //needs tokens but I can't find any
-        //             PrintWarning(node.GetRwIf(), "Condition in if statement must be a Boolean expression");
-        //         }
-        //     }
-        //     else
-        //     {
-        //         //needs tokens but I can't find any
-        //         PrintWarning(node.GetRwIf(), "Expression in if statement is not defined");
-        //     }
-        // }
 
 
     }

@@ -20,6 +20,10 @@ public abstract class PFunctDeclarations : Node
 {
 }
 
+public abstract class PFunctDeclaration : Node
+{
+}
+
 public abstract class PMainDeclaration : Node
 {
 }
@@ -624,14 +628,7 @@ public sealed class ANoneConstDeclarations : PConstDeclarations
 public sealed class ASomeFunctDeclarations : PFunctDeclarations
 {
     private PFunctDeclarations _funct_declarations_;
-    private TRwFunction _rw_function_;
-    private TId _id_;
-    private TLParen _l_paren_;
-    private PParamDeclarations _param_declarations_;
-    private TRParen _r_paren_;
-    private TLBrace _l_brace_;
-    private PStatements _statements_;
-    private TRBrace _r_brace_;
+    private PFunctDeclaration _funct_declaration_;
 
     public ASomeFunctDeclarations ()
     {
@@ -639,39 +636,18 @@ public sealed class ASomeFunctDeclarations : PFunctDeclarations
 
     public ASomeFunctDeclarations (
             PFunctDeclarations _funct_declarations_,
-            TRwFunction _rw_function_,
-            TId _id_,
-            TLParen _l_paren_,
-            PParamDeclarations _param_declarations_,
-            TRParen _r_paren_,
-            TLBrace _l_brace_,
-            PStatements _statements_,
-            TRBrace _r_brace_
+            PFunctDeclaration _funct_declaration_
     )
     {
         SetFunctDeclarations (_funct_declarations_);
-        SetRwFunction (_rw_function_);
-        SetId (_id_);
-        SetLParen (_l_paren_);
-        SetParamDeclarations (_param_declarations_);
-        SetRParen (_r_paren_);
-        SetLBrace (_l_brace_);
-        SetStatements (_statements_);
-        SetRBrace (_r_brace_);
+        SetFunctDeclaration (_funct_declaration_);
     }
 
     public override Object Clone()
     {
         return new ASomeFunctDeclarations (
             (PFunctDeclarations)CloneNode (_funct_declarations_),
-            (TRwFunction)CloneNode (_rw_function_),
-            (TId)CloneNode (_id_),
-            (TLParen)CloneNode (_l_paren_),
-            (PParamDeclarations)CloneNode (_param_declarations_),
-            (TRParen)CloneNode (_r_paren_),
-            (TLBrace)CloneNode (_l_brace_),
-            (PStatements)CloneNode (_statements_),
-            (TRBrace)CloneNode (_r_brace_)
+            (PFunctDeclaration)CloneNode (_funct_declaration_)
         );
     }
 
@@ -704,6 +680,159 @@ public sealed class ASomeFunctDeclarations : PFunctDeclarations
 
         _funct_declarations_ = node;
     }
+    public PFunctDeclaration GetFunctDeclaration ()
+    {
+        return _funct_declaration_;
+    }
+
+    public void SetFunctDeclaration (PFunctDeclaration node)
+    {
+        if(_funct_declaration_ != null)
+        {
+            _funct_declaration_.Parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.Parent() != null)
+            {
+                node.Parent().RemoveChild(node);
+            }
+
+            node.Parent(this);
+        }
+
+        _funct_declaration_ = node;
+    }
+
+    public override string ToString()
+    {
+        return ""
+            + ToString (_funct_declarations_)
+            + ToString (_funct_declaration_)
+        ;
+    }
+
+    internal override void RemoveChild(Node child)
+    {
+        if ( _funct_declarations_ == child )
+        {
+            _funct_declarations_ = null;
+            return;
+        }
+        if ( _funct_declaration_ == child )
+        {
+            _funct_declaration_ = null;
+            return;
+        }
+    }
+
+    internal override void ReplaceChild(Node oldChild, Node newChild)
+    {
+        if ( _funct_declarations_ == oldChild )
+        {
+            SetFunctDeclarations ((PFunctDeclarations) newChild);
+            return;
+        }
+        if ( _funct_declaration_ == oldChild )
+        {
+            SetFunctDeclaration ((PFunctDeclaration) newChild);
+            return;
+        }
+    }
+
+}
+public sealed class ANoneFunctDeclarations : PFunctDeclarations
+{
+
+
+    public ANoneFunctDeclarations (
+    )
+    {
+    }
+
+    public override Object Clone()
+    {
+        return new ANoneFunctDeclarations (
+        );
+    }
+
+    public override void Apply(Switch sw)
+    {
+        ((Analysis) sw).CaseANoneFunctDeclarations(this);
+    }
+
+
+    public override string ToString()
+    {
+        return ""
+        ;
+    }
+
+    internal override void RemoveChild(Node child)
+    {
+    }
+
+    internal override void ReplaceChild(Node oldChild, Node newChild)
+    {
+    }
+
+}
+public sealed class AFunctDeclaration : PFunctDeclaration
+{
+    private TRwFunction _rw_function_;
+    private TId _id_;
+    private TLParen _l_paren_;
+    private PParamDeclarations _param_declarations_;
+    private TRParen _r_paren_;
+    private TLBrace _l_brace_;
+    private PStatements _statements_;
+    private TRBrace _r_brace_;
+
+    public AFunctDeclaration ()
+    {
+    }
+
+    public AFunctDeclaration (
+            TRwFunction _rw_function_,
+            TId _id_,
+            TLParen _l_paren_,
+            PParamDeclarations _param_declarations_,
+            TRParen _r_paren_,
+            TLBrace _l_brace_,
+            PStatements _statements_,
+            TRBrace _r_brace_
+    )
+    {
+        SetRwFunction (_rw_function_);
+        SetId (_id_);
+        SetLParen (_l_paren_);
+        SetParamDeclarations (_param_declarations_);
+        SetRParen (_r_paren_);
+        SetLBrace (_l_brace_);
+        SetStatements (_statements_);
+        SetRBrace (_r_brace_);
+    }
+
+    public override Object Clone()
+    {
+        return new AFunctDeclaration (
+            (TRwFunction)CloneNode (_rw_function_),
+            (TId)CloneNode (_id_),
+            (TLParen)CloneNode (_l_paren_),
+            (PParamDeclarations)CloneNode (_param_declarations_),
+            (TRParen)CloneNode (_r_paren_),
+            (TLBrace)CloneNode (_l_brace_),
+            (PStatements)CloneNode (_statements_),
+            (TRBrace)CloneNode (_r_brace_)
+        );
+    }
+
+    public override void Apply(Switch sw)
+    {
+        ((Analysis) sw).CaseAFunctDeclaration(this);
+    }
+
     public TRwFunction GetRwFunction ()
     {
         return _rw_function_;
@@ -900,7 +1029,6 @@ public sealed class ASomeFunctDeclarations : PFunctDeclarations
     public override string ToString()
     {
         return ""
-            + ToString (_funct_declarations_)
             + ToString (_rw_function_)
             + ToString (_id_)
             + ToString (_l_paren_)
@@ -914,11 +1042,6 @@ public sealed class ASomeFunctDeclarations : PFunctDeclarations
 
     internal override void RemoveChild(Node child)
     {
-        if ( _funct_declarations_ == child )
-        {
-            _funct_declarations_ = null;
-            return;
-        }
         if ( _rw_function_ == child )
         {
             _rw_function_ = null;
@@ -963,11 +1086,6 @@ public sealed class ASomeFunctDeclarations : PFunctDeclarations
 
     internal override void ReplaceChild(Node oldChild, Node newChild)
     {
-        if ( _funct_declarations_ == oldChild )
-        {
-            SetFunctDeclarations ((PFunctDeclarations) newChild);
-            return;
-        }
         if ( _rw_function_ == oldChild )
         {
             SetRwFunction ((TRwFunction) newChild);
@@ -1008,42 +1126,6 @@ public sealed class ASomeFunctDeclarations : PFunctDeclarations
             SetRBrace ((TRBrace) newChild);
             return;
         }
-    }
-
-}
-public sealed class ANoneFunctDeclarations : PFunctDeclarations
-{
-
-
-    public ANoneFunctDeclarations (
-    )
-    {
-    }
-
-    public override Object Clone()
-    {
-        return new ANoneFunctDeclarations (
-        );
-    }
-
-    public override void Apply(Switch sw)
-    {
-        ((Analysis) sw).CaseANoneFunctDeclarations(this);
-    }
-
-
-    public override string ToString()
-    {
-        return ""
-        ;
-    }
-
-    internal override void RemoveChild(Node child)
-    {
-    }
-
-    internal override void ReplaceChild(Node oldChild, Node newChild)
-    {
     }
 
 }

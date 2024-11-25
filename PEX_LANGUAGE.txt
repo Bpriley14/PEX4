@@ -62,7 +62,8 @@ Productions
 	file = const_declarations funct_declarations main_declaration;
 
 	const_declarations = {some} rw_const rw_type id assign expression semi_colon const_declarations | {none};
-	funct_declarations = {some} funct_declarations rw_function id l_paren param_declarations r_paren l_brace statements r_brace | {none};
+	funct_declarations = {some} funct_declarations  funct_declaration | {none};
+	funct_declaration = rw_function id l_paren param_declarations r_paren l_brace statements r_brace;
 	main_declaration = rw_function rw_main l_paren r_paren l_brace statements r_brace;
 
 	bool_exp = {mult} bool_exp or_sign bool_term | {single} bool_term;
