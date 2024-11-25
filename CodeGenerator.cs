@@ -56,16 +56,16 @@ namespace CS426.analysis
             WriteLine("}");
         }
 
-        public override void InASomeFunctDeclarations(ASomeFunctDeclarations node)
+        public override void InAFunctDeclaration(AFunctDeclaration node)
         {
             WriteLine(".method static void " + node.GetId().Text + "() cil managed");
             WriteLine("{\n\t.maxstack 128\n");
         }
 
-        public override void OutASomeFunctDeclarations(ASomeFunctDeclarations node)
+        public override void OutAFunctDeclaration(AFunctDeclaration node)
         {
             WriteLine("\n\tret");
-            WriteLine("}");
+            WriteLine("}\n");
         }
 
         public override void OutAVarDec(AVarDec node)
