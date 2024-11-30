@@ -1,71 +1,144 @@
 // ------------------------------------------------------------
-// Variable Assignment Test
-// ------------------------------------------------------------
-function Test2() {
-	printLine("Variable Assignment Test");
-
-	int x;
-	x := 0;
-	float y;
-	y := 1.2;
-	str s;
-	s := "original string";
-	  
-	printLine("  x (before): ");
-	printInt(x);
-	printLine("  y (before): ");
-	printFloat(y);
-	printLine("  s (before): ");
-	printString(s);
-
-	x := 12345;
-	y := -6.789;
-	s := "dog goes \"woof\", cat goes \"meow\", but what does the fox say \\sarcasm";
-
-	printLine("  x (after): ");
-	printInt(x);
-	printLine("  y (after): ");
-	printFloat(y);
-	printLine("  s (after): ");
-	printString(s);
-}
-
-// ------------------------------------------------------------
 // Variable Declaration Test
 // ------------------------------------------------------------
-function Test1() {
-	printLine("Variable Declaration Test");
+	function Test1() {
+		printString("Variable Declaration Test");
+		printLine();
 	
-	//Declares a bunch of variables
-    int i;
-	i := 1;
-	float f1;
-	f1 :=-2.3;
-	float f2;
-	f2 :=3.4e5;
-	str s;
-	s :="hello world";
+		//Declares a bunch of variables
+        int i;
+		i := 1;
+		float f1;
+		f1 :=-2.3;
+		float f2;
+		f2 :=3.4e5;
+		str s;
+		s :="hello world";
 
-	// Print out the variables
-	printInt(i);
-	printLine();
-	printFloat(f1);
-	printLine();
-	printFloat(f2);
-	printLine();
-	printString(s);
-	printLine();
-}
-
+		// Print out the variables
+		printInt(i);
+		printLine();
+		printFloat(f1);
+		printLine();
+		printFloat(f2);
+		printLine();
+		printString(s);
+		printLine();
+	}
 	
-function main() {
-	//Test1();
-	//Test2();
-	//Test3();
-	//Test4();
-	//Test5();
-	//Test6();
-	// Test 7 Is Called in Test6()
-	//Test8();
-	// Test 9 is Called in Test8()
-}
+// ------------------------------------------------------------
+// Variable Assignment Test
+// ------------------------------------------------------------
+	function Test2() {
+		printString("Variable Assignment Test");
+		printLine();
+		int x;
+		x := 0;
+		float y;
+		y := 1.2;
+		str s;
+		s := "original string";
+	  
+		printString("  x (before): ");
+		printInt(x);
+		printLine();
+		printString("  y (before): ");
+		printFloat(y);
+		printLine();
+		printString("  s (before): ");
+		printString(s);
+		printLine();
+		printLine();
+
+		x := 12345;
+		y := -6.789;
+		s := "dog goes \"woof\", cat goes \"meow\", but what does the fox say \\sarcasm";
+
+		printString("  x (after): ");
+		printInt(x);
+		printLine();
+		printString("  y (after): ");
+		printFloat(y);
+		printLine();
+		printString("  s (after): ");
+		printString(s);
+	}
+
+// ------------------------------------------------------------
+// Math Operation Test
+// ------------------------------------------------------------
+	function Test3() {
+		printString("Math Operation Test");
+		printLine();
+
+		// Testing Integers
+		int x; 
+		x := 5 - 4 + 4;
+		x := x * 2 / 2;
+		x := (x * x) * (5 - 5);
+		printString(" x = ");
+		printInt(x); //should be 0
+		printLine();
+
+		// Testing Floats (don't worry if the rounding is a little off)
+		float y; 
+		y := 10.44 + 9.79 - 10.115;
+		y := -(y * (2.0 / 1.0));
+		printString(" y = ");
+		printFloat(y);
+		printLine();
+	}
+
+// ------------------------------------------------------------
+// Relational Operators
+// ------------------------------------------------------------
+	function Test4() {
+
+		printString("Relational Operator Test");
+		printLine();
+
+		if (5 > 2) {
+			printString("Greater than works");
+			printLine();
+		}
+
+		if (2 < 5) { 
+			printString("Less than works");
+			printLine();
+		}
+
+		if (4 >= 4) {
+			printString("Greater than or equal works");
+			printLine();
+		}
+
+		if (4 <= 4) {
+			printString("Less than or equal works");
+			printLine();
+		}
+
+		if (5.0 = 5.0) {
+			printString("Equals works");
+			printLine();
+		}
+
+		if (2.5 != 3.0) {
+			printString("Not Equals works");
+			printLine();
+		}
+
+		printLine();
+	}
+	
+	
+	function main() {
+		Test1();
+		Test2();
+		Test3();
+		//Test4();
+		//Test5();
+		//Test6();
+		// Test 7 Is Called in Test6()
+		//Test8();
+		// Test 9 is Called in Test8()
+	}
