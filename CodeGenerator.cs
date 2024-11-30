@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace CS426.analysis
     class CodeGenerator : DepthFirstAdapter
     {
         StreamWriter _output;
+        private int labelCounter = 0;
 
         public CodeGenerator(String outputFilename)
         {
@@ -123,6 +125,16 @@ namespace CS426.analysis
             WriteLine("\tmul");
         }
 
+        public override void OutAMinusExpression(AMinusExpression node)
+        {
+            WriteLine("\tsub");
+        }
+
+        public override void OutADivTerm(ADivTerm node)
+        {
+            WriteLine("\tdiv");
+        }
+
         public override void OutANegNegation(ANegNegation node)
         {
             WriteLine("\tneg");
@@ -157,6 +169,63 @@ namespace CS426.analysis
             {
                 WriteLine("\tcall void " + node.GetId().Text + "()");
             }
+        }
+
+        private string GenerateUniqueLabel(string baseLabel)
+        {
+            return $"{baseLabel}_{labelCounter++}";
+        }
+
+        public override void OutAEqualBoolComp(AEqualBoolComp node)
+        {
+            string labelTrue = GenerateUniqueLabel("LABEL_TRUE");
+            string labelContinue = GenerateUniqueLabel("LABEL_CONTINUE");
+
+            WriteLine("\tbeq " + labelTrue);
+            WriteLine("\tldc.i4 0"); // Push 0 for false
+            WriteLine("\tbr " + labelContinue);
+            WriteLine(labelTrue + ":");
+            WriteLine("\tldc.i4 1"); // Push 1 for true
+            WriteLine(labelContinue + ":");
+        }
+
+
+        public override void CaseAIfStatement(AIfStatement node)
+        {
+            string labelTrue = GenerateUniqueLabel("LABEL_TRUE");
+            string labelFalse = GenerateUniqueLabel("LABEL_FALSE");
+            string labelEnd = GenerateUniqueLabel("LABEL_END");
+
+
+            // Branch based on the value on the stack
+            WriteLine("\tbrtrue " + labelTrue); // If true, jump to LABEL_TRUE
+            WriteLine("\tbr " + labelFalse); // otherwise, jump to LABEL_FALSE
+
+            // Code for the "if true" block
+            WriteLine("\t" + labelTrue + ":\n\t\t");
+            node.GetIfStmt(); // Visit the "if" block
+            WriteLine("\t\tbr " + labelEnd); // Jump to the end
+
+            // End of the if/else statement
+            WriteLine(labelEnd + ":");
+        }
+
+        public override void CaseAYesElseElseStmt(AYesElseElseStmt node)
+        {
+            string labelFalse = GenerateUniqueLabel("LABEL_FALSE");
+            string labelEnd = GenerateUniqueLabel("LABEL_END");
+
+
+            // Branch based on the value on the stack
+            WriteLine("\tbrtrue " + labelFalse); // If true, jump to LABEL_FALSE
+            WriteLine("\tbr " + labelEnd); // Otherwise, jump to LABEL_END
+
+            // Code for the "else" block
+            WriteLine(labelFalse + ":");
+            node.GetRwElse(); // Visit the "else" block
+
+            // End of the if/else statement
+            WriteLine(labelEnd + ":");
         }
 
     }
