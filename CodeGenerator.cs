@@ -227,6 +227,22 @@ namespace CS426.analysis
             // End of the if/else statement
             WriteLine(labelEnd + ":");
         }
+        
+        public override void OutANegBoolNot(ANegBoolNot node)
+        {
+            WriteLine("\tldc.i4 0");
+            WriteLine("\tceq");
+        }
+        
+        public override void OutAMultBoolExp(AMultBoolExp node)
+        {
+            WriteLine("\tor");
+        }
+        
+        public override void OutAMultBoolTerm(AMultBoolTerm node)
+        {
+            WriteLine("\tand");
+        }
 
     }
 }
