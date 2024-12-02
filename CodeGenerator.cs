@@ -176,56 +176,67 @@ namespace CS426.analysis
             return $"{baseLabel}_{labelCounter++}";
         }
 
-        public override void OutAEqualBoolComp(AEqualBoolComp node)
+        public override void OutAEqualNumComp(AEqualNumComp node)
         {
-            string labelTrue = GenerateUniqueLabel("LABEL_TRUE");
-            string labelContinue = GenerateUniqueLabel("LABEL_CONTINUE");
-
-            WriteLine("\tbeq " + labelTrue);
+            WriteLine("\n\t// OutAEqualBoolComp Start");
+        
+            string lblTrue = GenerateUniqueLabel("LABEL_TRUE");
+            string lblContinue = GenerateUniqueLabel("LABEL_CONTINUE");
+        
+            WriteLine("\tbeq " + lblTrue);
             WriteLine("\tldc.i4 0"); // Push 0 for false
-            WriteLine("\tbr " + labelContinue);
-            WriteLine(labelTrue + ":");
+            WriteLine("\tbr " + lblContinue);
+            WriteLine(lblTrue + ":");
             WriteLine("\tldc.i4 1"); // Push 1 for true
-            WriteLine(labelContinue + ":");
+            WriteLine(lblContinue + ":");
         }
-
-
-        public override void CaseAIfStatement(AIfStatement node)
+        
+        public override void CaseAIfStmt(AIfStmt node)
         {
-            string labelTrue = GenerateUniqueLabel("LABEL_TRUE");
-            string labelFalse = GenerateUniqueLabel("LABEL_FALSE");
-            string labelEnd = GenerateUniqueLabel("LABEL_END");
-
-
-            // Branch based on the value on the stack
-            WriteLine("\tbrtrue " + labelTrue); // If true, jump to LABEL_TRUE
-            WriteLine("\tbr " + labelFalse); // otherwise, jump to LABEL_FALSE
-
-            // Code for the "if true" block
-            WriteLine("\t" + labelTrue + ":\n\t\t");
-            node.GetIfStmt(); // Visit the "if" block
-            WriteLine("\t\tbr " + labelEnd); // Jump to the end
-
-            // End of the if/else statement
-            WriteLine(labelEnd + ":");
-        }
-
-        public override void CaseAYesElseElseStmt(AYesElseElseStmt node)
-        {
-            string labelFalse = GenerateUniqueLabel("LABEL_FALSE");
-            string labelEnd = GenerateUniqueLabel("LABEL_END");
-
-
-            // Branch based on the value on the stack
-            WriteLine("\tbrtrue " + labelFalse); // If true, jump to LABEL_FALSE
-            WriteLine("\tbr " + labelEnd); // Otherwise, jump to LABEL_END
-
-            // Code for the "else" block
-            WriteLine(labelFalse + ":");
-            node.GetRwElse(); // Visit the "else" block
-
-            // End of the if/else statement
-            WriteLine(labelEnd + ":");
+            string lblTrue = GenerateUniqueLabel("LBL_TRUE");
+            string lblFalse = GenerateUniqueLabel("LBL_FALSE");
+            string lblContinue = GenerateUniqueLabel("LBL_CONTINUE");
+        
+            WriteLine("\n\t// Conditional Start");
+            InAIfStmt(node);
+        
+            // some automatically generated code here that you shouldn't have to touch
+        
+            // This is the code for the conditional test  If you've done it correctly, it should generate appropriate code for the boolean expression
+            // that will leave a 1 on the stack if the test evaluates to true after the code executes, 0 if it is false.  See bullet #16 in the ISIL reference.
+            if (node.GetBoolExp() != null)
+            {
+                node.GetBoolExp().Apply(this);
+            }
+        
+            //other boring syntax stuff I didn't need to touch
+        
+            //  Before I generate code to be executed if the test is true, need to generate the required control flow (bullet #17)
+            if (node.GetStatements() != null)
+            {
+                WriteLine("\tbrtrue " + lblTrue);
+                WriteLine("\tbr " + lblFalse);
+        
+                WriteLine("\t" + lblTrue + ":");
+        
+                node.GetStatements().Apply(this);  // generate the code for the true part by visiting further down the tree
+        
+                WriteLine("\tbr " + lblContinue);  // now that the true part is generated, branch on to the continuation
+            }
+            if (node.GetRBrace() != null)
+            {
+                node.GetRBrace().Apply(this);
+            }
+            // similarly, before I generate the code for the false branch, need to label the target as required above
+            if (node.GetElseStmt() != null)
+            {
+                WriteLine("\t" + lblFalse + ":");
+                node.GetElseStmt().Apply(this);  // generate the code for the false branch by visiting this node
+            }
+        
+            WriteLine("\t" + lblContinue + ":");  // then provide the required continuation label
+            WriteLine("\t// Conditional End\n");
+            OutAIfStmt(node);
         }
         
         public override void OutANegBoolNot(ANegBoolNot node)
