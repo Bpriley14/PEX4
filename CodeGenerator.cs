@@ -178,7 +178,6 @@ namespace CS426.analysis
 
         public override void OutAEqualNumComp(AEqualNumComp node)
         {
-            WriteLine("\n\t// OutAEqualBoolComp Start");
         
             string lblTrue = GenerateUniqueLabel("LABEL_TRUE");
             string lblContinue = GenerateUniqueLabel("LABEL_CONTINUE");
@@ -190,7 +189,77 @@ namespace CS426.analysis
             WriteLine("\tldc.i4 1"); // Push 1 for true
             WriteLine(lblContinue + ":");
         }
-        
+
+        public override void OutANotEqualNumComp(ANotEqualNumComp node)
+        {
+
+            string lblTrue = GenerateUniqueLabel("LABEL_TRUE");
+            string lblContinue = GenerateUniqueLabel("LABEL_CONTINUE");
+
+            WriteLine("\tbne.un " + lblTrue);
+            WriteLine("\tldc.i4 0"); // Push 0 for false
+            WriteLine("\tbr " + lblContinue);
+            WriteLine(lblTrue + ":");
+            WriteLine("\tldc.i4 1"); // Push 1 for true
+            WriteLine(lblContinue + ":");
+        }
+
+        public override void OutALessNumComp(ALessNumComp node)
+        {
+
+            string lblTrue = GenerateUniqueLabel("LABEL_TRUE");
+            string lblContinue = GenerateUniqueLabel("LABEL_CONTINUE");
+
+            WriteLine("\tblt " + lblTrue);
+            WriteLine("\tldc.i4 0"); // Push 0 for false
+            WriteLine("\tbr " + lblContinue);
+            WriteLine(lblTrue + ":");
+            WriteLine("\tldc.i4 1"); // Push 1 for true
+            WriteLine(lblContinue + ":");
+        }
+
+        public override void OutALessEqualNumComp(ALessEqualNumComp node)
+        {
+
+            string lblTrue = GenerateUniqueLabel("LABEL_TRUE");
+            string lblContinue = GenerateUniqueLabel("LABEL_CONTINUE");
+
+            WriteLine("\tble " + lblTrue);
+            WriteLine("\tldc.i4 0"); // Push 0 for false
+            WriteLine("\tbr " + lblContinue);
+            WriteLine(lblTrue + ":");
+            WriteLine("\tldc.i4 1"); // Push 1 for true
+            WriteLine(lblContinue + ":");
+        }
+
+        public override void OutAGreaterNumComp(AGreaterNumComp node)
+        {
+
+            string lblTrue = GenerateUniqueLabel("LABEL_TRUE");
+            string lblContinue = GenerateUniqueLabel("LABEL_CONTINUE");
+
+            WriteLine("\tbgt " + lblTrue);
+            WriteLine("\tldc.i4 0"); // Push 0 for false
+            WriteLine("\tbr " + lblContinue);
+            WriteLine(lblTrue + ":");
+            WriteLine("\tldc.i4 1"); // Push 1 for true
+            WriteLine(lblContinue + ":");
+        }
+
+        public override void OutAGreaterEqualNumComp(AGreaterEqualNumComp node)
+        {
+
+            string lblTrue = GenerateUniqueLabel("LABEL_TRUE");
+            string lblContinue = GenerateUniqueLabel("LABEL_CONTINUE");
+
+            WriteLine("\tbge " + lblTrue);
+            WriteLine("\tldc.i4 0"); // Push 0 for false
+            WriteLine("\tbr " + lblContinue);
+            WriteLine(lblTrue + ":");
+            WriteLine("\tldc.i4 1"); // Push 1 for true
+            WriteLine(lblContinue + ":");
+        }
+
         public override void CaseAIfStmt(AIfStmt node)
         {
             string lblTrue = GenerateUniqueLabel("LBL_TRUE");
