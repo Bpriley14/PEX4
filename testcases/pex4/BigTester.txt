@@ -129,7 +129,27 @@
 
 		printLine();
 	}
+// ------------------------------------------------------------
+// Control Structures:  While Statements
+// ------------------------------------------------------------ 
+	public static void Test8() {
+		printString("While Loop Test");
+		printLine();
+    		int i;
+		i := 0;
 
+		while (i < 10) {
+			printString("  " + i);
+			i := i + 1;
+		}
+
+    		printString("  Loop Complete");
+    		printLine();
+
+    		// Testing to See if Function Calls within a Function Work
+    		Test9();
+  	}
+	
 // ------------------------------------------------------------
 // Control Structures:  Nested While Statements
 // ------------------------------------------------------------ 
