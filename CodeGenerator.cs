@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace CS426.analysis
 {
@@ -75,10 +76,10 @@ namespace CS426.analysis
             WriteLine("\t// Decalring Variable " + node.GetId().ToString());
             Write("\t.locals init (");
 
-            if(node.GetRwType().Text == "int")
+            if (node.GetRwType().Text == "int")
             {
                 Write("int32 ");
-            } 
+            }
             else if (node.GetRwType().Text == "float")
             {
                 Write("float32 ");
@@ -97,7 +98,7 @@ namespace CS426.analysis
 
         public override void OutAIntLiteral(AIntLiteral node)
         {
-           WriteLine("\tldc.i4 " + node.GetLitInteger().Text);
+            WriteLine("\tldc.i4 " + node.GetLitInteger().Text);
         }
 
         public override void OutAStrLiteral(AStrLiteral node)
@@ -178,10 +179,11 @@ namespace CS426.analysis
 
         public override void OutAEqualNumComp(AEqualNumComp node)
         {
-        
+            WriteLine("\n\t// OutAEqualBoolComp Start");
+
             string lblTrue = GenerateUniqueLabel("LABEL_TRUE");
             string lblContinue = GenerateUniqueLabel("LABEL_CONTINUE");
-        
+
             WriteLine("\tbeq " + lblTrue);
             WriteLine("\tldc.i4 0"); // Push 0 for false
             WriteLine("\tbr " + lblContinue);
@@ -189,7 +191,6 @@ namespace CS426.analysis
             WriteLine("\tldc.i4 1"); // Push 1 for true
             WriteLine(lblContinue + ":");
         }
-
         public override void OutANotEqualNumComp(ANotEqualNumComp node)
         {
 
@@ -265,64 +266,101 @@ namespace CS426.analysis
             string lblTrue = GenerateUniqueLabel("LBL_TRUE");
             string lblFalse = GenerateUniqueLabel("LBL_FALSE");
             string lblContinue = GenerateUniqueLabel("LBL_CONTINUE");
-        
+
             WriteLine("\n\t// Conditional Start");
             InAIfStmt(node);
-        
+
             // some automatically generated code here that you shouldn't have to touch
-        
+
             // This is the code for the conditional test  If you've done it correctly, it should generate appropriate code for the boolean expression
             // that will leave a 1 on the stack if the test evaluates to true after the code executes, 0 if it is false.  See bullet #16 in the ISIL reference.
             if (node.GetBoolExp() != null)
             {
                 node.GetBoolExp().Apply(this);
             }
-        
+
             //other boring syntax stuff I didn't need to touch
-        
+
             //  Before I generate code to be executed if the test is true, need to generate the required control flow (bullet #17)
             if (node.GetStatements() != null)
             {
                 WriteLine("\tbrtrue " + lblTrue);
                 WriteLine("\tbr " + lblFalse);
-        
+
                 WriteLine("\t" + lblTrue + ":");
-        
+
                 node.GetStatements().Apply(this);  // generate the code for the true part by visiting further down the tree
-        
+
                 WriteLine("\tbr " + lblContinue);  // now that the true part is generated, branch on to the continuation
             }
+
             if (node.GetRBrace() != null)
             {
                 node.GetRBrace().Apply(this);
             }
+
             // similarly, before I generate the code for the false branch, need to label the target as required above
             if (node.GetElseStmt() != null)
             {
                 WriteLine("\t" + lblFalse + ":");
                 node.GetElseStmt().Apply(this);  // generate the code for the false branch by visiting this node
             }
-        
+
             WriteLine("\t" + lblContinue + ":");  // then provide the required continuation label
             WriteLine("\t// Conditional End\n");
             OutAIfStmt(node);
         }
-        
+
         public override void OutANegBoolNot(ANegBoolNot node)
         {
             WriteLine("\tldc.i4 0");
             WriteLine("\tceq");
         }
-        
+
         public override void OutAMultBoolExp(AMultBoolExp node)
         {
             WriteLine("\tor");
         }
-        
+
         public override void OutAMultBoolTerm(AMultBoolTerm node)
         {
             WriteLine("\tand");
         }
 
+        public override void CaseALoopStmt(ALoopStmt node)
+        {
+            string lblTrue = GenerateUniqueLabel("LBL_TRUE");
+            string lblContinue = GenerateUniqueLabel("LBL_Continue");
+
+            WriteLine("\n\t// Loop Start");
+            InALoopStmt(node);
+
+
+            if (node.GetStatements() != null)
+            {
+                WriteLine("\t" + lblTrue + ":");
+
+                //test code
+                if (node.GetBoolExp() != null)
+                {
+                    node.GetBoolExp().Apply(this);
+                }
+
+                WriteLine("\tbrzero " + lblContinue);
+
+                node.GetStatements().Apply(this);
+
+                WriteLine("\tbr " + lblTrue);
+            }
+
+            if (node.GetRBrace() != null)
+            {
+                node.GetRBrace().Apply(this);
+            }
+
+            WriteLine("\t" + lblContinue + ":");
+            WriteLine("\t// Loop End\n");
+            OutALoopStmt(node);
+        }
     }
 }
